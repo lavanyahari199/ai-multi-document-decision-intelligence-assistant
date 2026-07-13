@@ -1,0 +1,36 @@
+"""Base abstractions for the future Agentic AI workflow.
+
+This module is intentionally lightweight for Milestone 3 setup work. The
+current production app continues to use the existing Streamlit and src/ flow.
+"""
+
+from __future__ import annotations
+
+from abc import ABC, abstractmethod
+from typing import Any, TypedDict
+
+
+class AgentState(TypedDict, total=False):
+    """Shared state object passed between LangGraph agent nodes."""
+
+    user_query: str
+    intent: str
+    execution_plan: list[str]
+    retrieved_chunks: list[Any]
+    analysis: dict[str, Any]
+    verification: dict[str, Any]
+    memory: dict[str, Any]
+    final_response: str
+
+
+class BaseAgent(ABC):
+    """Minimal base class that all agent skeletons inherit from."""
+
+    def __init__(self, name: str) -> None:
+        """Store the agent name for future tracing and observability."""
+
+        self.name = name
+
+    @abstractmethod
+    def execute(self, state: AgentState) -> AgentState:
+        """Execute one agent step and return the updated graph state."""
