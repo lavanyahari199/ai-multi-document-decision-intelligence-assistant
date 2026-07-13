@@ -114,3 +114,132 @@ User Uploads Multiple PDFs
 Milestone Completed Successfully.
 
 Project is ready for implementation of document upload and text extraction functionality in the next milestone.
+
+# Milestone 2 – Core Application Implementation
+
+## Objective
+
+Implement the complete AI Multi-Document Decision Intelligence Assistant based on the approved requirements, architecture, and supported document categories defined during Milestone 1.
+
+## Features Implemented
+
+### Document Processing
+
+* Multi-PDF Upload
+* PDF Text Extraction
+* Text Cleaning
+* Text Chunking using RecursiveCharacterTextSplitter
+
+### Document Intelligence
+
+* Hybrid Document Title Detection
+
+      * Heuristic Title Detection
+      * Gemini Fallback Extraction
+      * Filename Fallback
+
+* Hybrid Document Category Detection
+
+      * Keyword-Based Classification
+      * Gemini Fallback Classification
+
+### Vector Search & Retrieval
+
+* Embedding Generation using SentenceTransformers (all-MiniLM-L6-v2)
+* FAISS Vector Database Creation
+* Similarity Search Retrieval
+* Top-K Context Retrieval
+
+### Comparison Engine
+
+* Structured Document Summaries
+* Executive Comparison Dashboard
+* Executive Recommendation
+* Quick Decision Guide
+* Detailed AI Comparison Report
+* Decision Support Summary
+
+### Retrieval-Augmented Generation (RAG)
+
+* Follow-Up Question Support
+* Semantic Search
+* Context-Based Answer Generation using Gemini 2.5 Flash
+
+### Application Architecture
+
+The application was refactored into a modular architecture consisting of:
+
+* `app.py`
+* `config.py`
+* `models.py`
+* `pdf_processor.py`
+* `embeddings.py`
+* `vector_store.py`
+* `report_generator.py`
+* `chat_engine.py`
+
+## Technical Enhancements
+
+### Gemini-Assisted Metadata Extraction
+
+Implemented Gemini-powered title detection and category classification to improve document understanding.
+
+### Structured Summarization Layer
+
+Implemented per-document structured summaries to improve comparison quality and ensure important information from uploaded documents is included in the final report.
+
+### Context Safety Controls
+
+Implemented configurable summarization limits to prevent oversized prompts and maintain predictable latency and cost.
+
+### Error Handling & Fallback Logic
+
+Implemented fallback mechanisms for:
+
+* Title Detection
+* Category Classification
+* Document Summarization
+* PDF Processing
+
+### Executive Dashboard Enhancements
+
+## Deliverables Completed
+
+* Multi-PDF Upload
+* PDF Processing Pipeline
+* Embedding Generation
+* FAISS Indexing
+* Document Intelligence Layer
+* Comparison Report Generation
+* RAG Follow-Up Question Answering
+* Modular Architecture Refactor
+
+## Status
+
+**Milestone Completed Successfully**
+
+## Outcome
+
+A fully functional production-ready baseline application has been delivered.
+
+The application is capable of:
+
+* Comparing multiple business documents
+* Generating executive comparison dashboards and decision-support reports.
+* Supporting follow-up questions using Retrieval-Augmented Generation (RAG)
+
+Future milestones will focus on enhancements and advanced capabilities rather than core functionality development.
+
+## Next Milestone
+
+### Milestone 3 – Agentic AI Enhancements
+
+Planned enhancements include:
+
+* Comparison Agent
+* Decision Support Agent
+* Follow-Up Question Agent
+* Personalized Recommendation Agent
+* Enhanced Source Attribution
+* Additional User Experience Improvements
+

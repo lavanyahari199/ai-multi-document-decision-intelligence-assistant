@@ -2,192 +2,120 @@
 
 ## Overview
 
-The AI Multi-Document Decision Intelligence Assistant is a Generative AI-powered application designed to help users compare multiple documents, identify key differences, extract important information, and make informed decisions.
+The AI Multi-Document Decision Intelligence Assistant is a Generative AI and Retrieval-Augmented Generation (RAG) application that helps users compare multiple business documents, identify key differences, generate AI-powered insights, and support decision-making.
 
-In real-world scenarios, people often need to evaluate multiple documents before making important personal or business decisions. Examples include comparing job offers, insurance policies, loan documents, vendor quotations, rental agreements, and business proposals.
+Instead of manually reviewing lengthy documents, users can upload multiple PDF files and receive a structured comparison report along with the ability to ask follow-up questions using the uploaded documents as context.
 
-Manually reviewing and comparing these documents can be time-consuming, error-prone, and overwhelming.
-
-This project leverages Generative AI to simplify the comparison process by automatically extracting information, generating comparisons, highlighting differences, and providing decision-support insights.
+The application is designed for business and personal decision-making scenarios where multiple options must be evaluated before making a final decision.
 
 ## Problem Statement
 
-People frequently encounter situations where they must choose between multiple options presented in document form.
+Organizations and individuals frequently compare multiple documents before making important decisions.
 
 Examples include:
 
-* Multiple job offers from different companies
-* Loan offers from different banks
-* Insurance policies from different providers
-* Vendor quotations for procurement decisions
-* Rental agreements from different properties
-* Business proposals from multiple vendors
+* Comparing job offer letters
+* Comparing insurance policies
+* Comparing loan sanction letters
+* Comparing vendor quotations
+* Comparing business proposals
 
-These documents often contain large amounts of information, making it difficult to identify key differences and understand trade-offs.
+Manual comparison is often time-consuming, inconsistent, and prone to overlooking important details.
 
-As a result, users spend significant time manually reviewing documents and may overlook important details that impact decision-making.
+The objective of this project is to automate document understanding, comparison, and decision support using Generative AI.
 
 ## Proposed Solution
 
-The AI Multi-Document Decision Intelligence Assistant provides an intelligent workflow that:
+The application provides an end-to-end document intelligence workflow:
 
-1. Accepts multiple PDF documents from users
-2. Extracts relevant information from each document
-3. Identifies important attributes and decision factors
-4. Compares documents side-by-side
-5. Highlights similarities and differences
-6. Generates AI-powered insights
-7. Provides decision-support recommendations
+1. Upload multiple PDF documents
+2. Extract document text
+3. Detect document titles
+4. Detect document categories
+5. Generate document chunks
+6. Create vector embeddings
+7. Store embeddings in FAISS
+8. Generate an Executive Comparison Dashboard featuring:
+    * Executive Recommendation
+    * Quick Decision Guide
+    * Detailed AI Comparison Report
+    * Decision-oriented insights
+9. Support follow-up questions using RAG
 
-The goal is not to make decisions for users, but to help them make better-informed decisions through structured analysis and AI-generated insights.
-
-## Target Use Cases
-
-### Career Decisions
-
-Compare:
-
-* Job Offer A
-* Job Offer B
-* Job Offer C
-
-Identify differences in:
-
-* Salary
-* Bonus
-* Benefits
-* Notice Period
-* Work Location
-* Work-from-Home Policies
-
----
-
-### Financial Decisions
-
-Compare:
-
-* Loan Offers
-* Credit Card Plans
-* Investment Documents
-
-Identify:
-
-* Costs
-* Interest Rates
-* Fees
-* Long-Term Financial Impact
-
----
-
-### Insurance Comparison
-
-Compare:
-
-* Health Insurance Policies
-* Life Insurance Policies
-* Vehicle Insurance Plans
-
-Identify:
-
-* Coverage
-* Premiums
-* Exclusions
-* Waiting Periods
-
----
-
-### Vendor Evaluation
-
-Compare:
-
-* Vendor Quotations
-* Service Contracts
-* Procurement Documents
-
-Identify:
-
-* Pricing
-* Deliverables
-* Support
-* Service Level Agreements
+The application assists users in making informed decisions but does not make decisions on their behalf.
 
 ## Supported Document Types
 
-The application is optimized for comparing the following business and decision-oriented documents:
+The system currently supports:
 
-- Job Offers
-- Insurance Policies
-- Loan Documents
-- Vendor Quotations
-- Business Proposals
+* Offer Letters
+* Insurance Policies
+* Loan Sanction Letters
+* Vendor Quotations
+* Business Proposals
 
-Note:
+The application is optimized for comparing documents belonging to the same category.
 
-The system is specifically designed for structured business decision-making scenarios. Results may vary when comparing document types outside the supported categories.
-
-## Planned Features
+## Key Features
 
 ### Multi-PDF Upload
 
 Upload and process multiple PDF documents simultaneously.
 
-### Text Extraction
+### Hybrid Document Title Detection
 
-Extract text content from uploaded documents.
+Automatically detects document titles using:
 
-### Document Understanding
+* Heuristic title extraction
+* Gemini-based title extraction (only if heuristic confidence is low)
+* Filename fallback
 
-Identify important information from each document.
+### Hybrid Document Category Detection
 
-### Side-by-Side Comparison
+Automatically classifies uploaded documents using:
 
-Generate structured comparisons across multiple documents.
+* Rule-based keyword matching
+* Gemini fallback classification
 
-### Difference Identification
+### Structured Document Summarization
 
-Highlight key similarities and differences.
+Each document is summarized into a structured business-oriented format before comparison.
 
-### AI-Powered Insights
+### Executive Comparison Dashboard
 
-Generate concise summaries and observations.
+The application generates:
 
-### Decision Support Recommendations
+1. Document Overview
+2. Comparison Table
+3. Key Differences
+4. Executive Recommendation
+5. Quick Decision Guide
+6. Detailed AI Comparison Report
 
-Provide reasoning-based recommendations using Generative AI.
+### Retrieval-Augmented Generation (RAG)
 
-### Interactive User Interface
+Users can ask follow-up questions after the report is generated.
 
-Simple and intuitive Streamlit-based interface.
+Responses are generated using:
 
-### Session-Based Analysis
+* Semantic Search
+* FAISS Vector Retrieval
+* Gemini 2.5 Flash
 
-Maintain analysis results during a user session.
+### Decision Intelligence
 
-## Comparison Output Structure
+The system focuses on helping users compare trade-offs, identify the best option for different priorities, generate executive recommendations, and support informed decision-making.
 
-For every document comparison, the application generates the following sections:
+### Cost Optimizations
 
-### 1. Document Overview
+The application minimizes LLM usage by:
 
-Provides a high-level summary of each uploaded document.
-
-### 2. Comparison Table
-
-Generates a structured side-by-side comparison of important attributes.
-
-### 3. Key Differences
-
-Highlights the most significant differences between documents.
-
-### 4. AI Insights
-
-Provides AI-generated observations and business-focused analysis.
-
-### 5. Decision Support Summary
-
-Generates recommendation-oriented guidance based on user priorities and document characteristics.
-
-The system supports decision-making but does not make decisions on behalf of users.
+* Hybrid title detection (heuristics first, Gemini fallback)
+* Hybrid category detection (rules first, Gemini fallback)
+* Decision-focused document summaries
+* Reduced prompt sizes
+* Executive report generation from summaries
+* Friendly error handling for Gemini quota and availability
 
 ## Technology Stack
 
@@ -201,65 +129,88 @@ The system supports decision-making but does not make decisions on behalf of use
 
 ### PDF Processing
 
-* PyPDF2
+* PyPDF
 
-### Data Processing
+### Text Processing
 
-* Pandas
+* LangChain RecursiveCharacterTextSplitter
+
+### Embedding Model
+
+* SentenceTransformers (all-MiniLM-L6-v2)
+
+### Vector Database
+
+* FAISS
+
+### Large Language Model
+
+* Gemini 2.5 Flash
+
+### Numerical Processing
+
 * NumPy
 
-### Generative AI
+## Architecture
 
-* Google Gemini
+Multiple PDF Documents
+↓
+PDF Text Extraction
+↓
+Title Detection
+↓
+Category Detection
+↓
+Text Chunking
+↓
+SentenceTransformer Embeddings
+↓
+FAISS Vector Database
 
-### Development Tools
+Comparison Flow:
 
-* Git
-* GitHub
-* VS Code
+Documents
+↓
+Structured Document Summaries
+↓
+Comparison Report Generation
+↓
+Decision Support Insights
 
-## Project Architecture
+RAG Flow:
 
-```text
-User Uploads Multiple PDFs
-            │
-            ▼
-     PDF Text Extraction
-            │
-            ▼
- Structured Information Extraction
-            │
-            ▼
-      Document Comparison Engine
-            │
-            ▼
-      Key Difference Analysis
-            │
-            ▼
-      AI Insight Generation
-            │
-            ▼
-     Decision Support Summary
-            │
-            ▼
-        Streamlit Interface
-```
-
-## Future Enhancements
-
-* Support for Word Documents
-* Support for Excel Files
-* Export Comparison Reports
-* Comparison History
-* Decision Scorecards
-* Interactive Comparison Dashboard
-* Multi-Format Document Support
-* Enterprise Workflow Integration
+User Question
+↓
+Query Embedding
+↓
+FAISS Similarity Search
+↓
+Top-K Relevant Chunks
+↓
+Gemini 2.5 Flash
+↓
+Answer Generation
 
 ## Project Status
 
-**Current Status:** In Development
+Current Status: Milestone 2 Complete
 
-**Milestone:** 1 – Project Setup & Documentation
+Completed:
 
-**Goal:** Build an AI-powered decision intelligence platform that helps users compare documents and make informed decisions using Generative AI.
+* Multi-PDF Upload
+* PDF Processing
+* Title Detection
+* Category Detection
+* Embedding Generation
+* FAISS Search
+* Executive Comparison Dashboard
+* Decision Support Recommendations
+* Decision-Oriented RAG Follow-Up
+* Modular Architecture Refactor
+
+Next Milestone:
+
+* Agentic AI Enhancements
+* Decision Support Agent
+* Follow-Up Question Agent
+* Recommendation Agent
