@@ -3,18 +3,30 @@
 from __future__ import annotations
 
 from agents.base_agent import AgentState, BaseAgent
-
+from src.chat_engine import generate_final_answer
 
 class DecisionAgent(BaseAgent):
     """Produces the future final decision response."""
 
-    def __init__(self) -> None:
+    def __init__(self, api_key: str) -> None:
         """Initialize the decision agent."""
 
         super().__init__(name="decision")
+        self.api_key = api_key
 
     def execute(self, state: AgentState) -> AgentState:
-        """Return state unchanged until decision synthesis is implemented."""
+        """
+        Generate the final response using the existing RAG chat engine.
+        """
 
-        # TODO: Convert verified analysis into the final user-facing response.
+        answer = generate_final_answer(
+            question=state["user_query"],
+            analysis_result=state["analysis_result"],
+            api_key=self.api_key,
+        )
+
+        state["final_response"] = answer
+        state["current_agent"] = self.name
+        state["workflow_status"] = "completed"
+
         return state

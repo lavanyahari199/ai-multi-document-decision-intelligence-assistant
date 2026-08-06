@@ -183,19 +183,47 @@ RAG Flow:
 
 User Question
 ↓
-Query Embedding
+Planner Agent
+↓
+Retrieval Agent
 ↓
 FAISS Similarity Search
 ↓
-Top-K Relevant Chunks
+Analyzer Agent
+↓
+Verifier Agent
+↓
+Decision Agent
 ↓
 Gemini 2.5 Flash
 ↓
 Answer Generation
 
+## Agentic AI Workflow
+
+Follow-Up Question Flow:
+
+User Question
+↓
+Planner Agent
+↓
+Retrieval Agent
+↓
+FAISS Similarity Search
+↓
+Analyzer Agent
+↓
+Verifier Agent
+↓
+Decision Agent
+↓
+Gemini 2.5 Flash
+↓
+Final Answer
+
 ## Project Status
 
-Current Status: Milestone 3 - Step 1 Complete
+Current Status: Milestone 3 - Step 2 Complete
 
 Completed:
 
@@ -213,13 +241,19 @@ Completed:
 * Multi-Agent Architecture Foundation
 * Shared AgentState
 * Agent Orchestrator
-* Tool Layer Foundation
-* Memory Service Foundation
-* Prompt Template Foundation
+* Search Tool
+* Conversation Memory Service
+* Agent Workflow Integration
+* Planner Agent Implementation
+* Retrieval Agent Implementation
+* Analyzer Agent Implementation
+* Verifier Agent Implementation
+* Decision Agent Implementation
+* Agentic Follow-Up Question Workflow
 
 Next Milestone:
 
-* Multi-Agent Logic Implementation
-* Agent Integration with Existing RAG Pipeline
-* Conversation Memory
-* Verification Workflow
+* Persistent Conversation Memory
+* Enhanced Verification Logic
+* Agent Observability
+* Workflow Visualization

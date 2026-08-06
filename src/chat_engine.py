@@ -16,6 +16,62 @@ from src.models import ChunkRecord
 from src.report_generator import call_gemini
 from src.vector_store import retrieve_context
 
+def generate_final_answer(
+    question: str,
+    analysis_result: dict,
+    api_key: str,
+) -> str:
+    """Generate the final response from analyzed evidence without performing retrieval."""
+
+    documents = analysis_result.get("documents", [])
+
+    if not documents:
+        return "No relevant information was found in the uploaded documents."
+
+    context = "\n\n".join(
+        f"{doc['title']}\n{doc['evidence']}"
+        for doc in documents
+    )
+
+    prompt = f"""
+    You are an Executive Decision Assistant.
+
+    Your goal is to help users make decisions quickly.
+
+    Instructions:
+    - Answer in 80–120 words.
+    - Never exceed 150 words unless the user explicitly asks for a detailed analysis.
+    - Give the recommendation first.
+    - Mention only the top 3–4 decision factors.
+    - Use Markdown headings.
+    - Use bullet points.
+    - Do not compare every company under separate headings.
+    - Do not summarize every document.
+    - Avoid repeating information.
+    - Do not mention chunk numbers or retrieval details.
+
+    Use this format:
+
+    ## Recommendation
+    <One concise recommendation>
+
+    ## Reasons
+    - Reason 1
+    - Reason 2
+    - Reason 3
+    - Reason 4 (optional)
+
+    ## Conclusion
+    <One concluding sentence>
+
+    Question:
+    {question}
+
+    Evidence:
+    {context}
+    """
+
+    return call_gemini(prompt, api_key)
 
 # =========================
 # RAG Follow-up Answers
@@ -25,49 +81,25 @@ from src.vector_store import retrieve_context
 def answer_follow_up(question: str, api_key: str, index: Any, chunks: list[ChunkRecord]) -> str:
     """Answer a user question with RAG context from the uploaded documents."""
 
-    # Retrieve only the most relevant chunks so the answer is grounded in uploaded documents.
     context_chunks = retrieve_context(index, chunks, question)
+
     if not context_chunks:
-        # Chat can be opened before processing; provide a helpful response instead of raising.
         return "Please upload and process documents before asking follow-up questions."
 
-    # Include source metadata beside each chunk so Gemini can cite document titles naturally.
-    context = "\n\n".join(
-        f"[{chunk.document_title} | {chunk.document_category} | chunk {chunk.chunk_index + 1}]\n{chunk.text}"
-        for chunk in context_chunks
+    analysis_result = {
+        "documents": [
+            {
+                "title": chunk.document_title,
+                "category": chunk.document_category,
+                "chunk_index": chunk.chunk_index,
+                "evidence": chunk.text,
+            }
+            for chunk in context_chunks
+        ]
+    }
+
+    return generate_final_answer(
+        question=question,
+        analysis_result=analysis_result,
+        api_key=api_key,
     )
-    # The prompt keeps answers constrained to retrieved evidence while steering Gemini toward decision support.
-    prompt = f"""
-You are an Executive Decision Assistant answering a follow-up question using retrieval-augmented generation.
-
-Rules:
-- Answer only from the retrieved context.
-- Cite document titles naturally in the answer.
-- If the answer is not present in the context, say that the uploaded documents do not specify it.
-- Start with a direct answer in 1-2 sentences.
-- Prioritize the recommendation before supporting details.
-- Compare only the documents relevant to the question.
-- Mention only decision-making factors that affect the answer.
-- Avoid repeating document wording or summarizing every retrieved chunk.
-- Keep the answer concise, ideally 80-150 words.
-- Exceed 150 words only if the user explicitly asks for detailed analysis.
-- Do not mention chunk numbers or retrieval details.
-
-Preferred structure:
-Answer
-(1-2 direct sentences)
-
-Key Comparison
-• Point 1
-• Point 2
-
-Recommendation
-One short concluding sentence, only if a recommendation is appropriate.
-
-Question:
-{question}
-
-Retrieved context:
-{context}
-"""
-    return call_gemini(prompt, api_key)

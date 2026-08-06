@@ -3,13 +3,20 @@
 from __future__ import annotations
 
 from typing import Any
-
+from src.vector_store import retrieve_context
 
 class SearchTool:
-    """Placeholder interface for future document or knowledge search."""
+    """Thin wrapper around the existing FAISS retrieval implementation."""
 
-    def search(self, query: str) -> list[Any]:
-        """Search for information related to a query."""
+    def __init__(self, faiss_index, chunks) -> None:
+        self.faiss_index = faiss_index
+        self.chunks = chunks
 
-        # TODO: Implement search behavior in a future milestone.
-        raise NotImplementedError("SearchTool.search is not implemented yet.")
+    def search(self, query: str):
+        """Return the most relevant chunks for a query."""
+
+        return retrieve_context(
+            index=self.faiss_index,
+            chunks=self.chunks,
+            question=query,
+        )

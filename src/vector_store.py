@@ -66,4 +66,18 @@ def retrieve_context(index: Any, chunks: list[ChunkRecord], question: str, top_k
     search_k = min(top_k, len(chunks))
     _, indices = index.search(query_embedding, search_k)
     # Convert FAISS row ids back into chunk records while guarding against invalid ids.
-    return [chunks[i] for i in indices[0] if 0 <= i < len(chunks)]
+#    return [chunks[i] for i in indices[0] if 0 <= i < len(chunks)]
+
+    #testing display
+    retrieved = [chunks[i] for i in indices[0] if 0 <= i < len(chunks)]
+
+    print("\n========== RETRIEVED CHUNKS ==========")
+
+    for i, chunk in enumerate(retrieved, start=1):
+        print(f"\nChunk {i}")
+        print(f"Document: {chunk.document_title}")
+        print(f"Chunk Index: {chunk.chunk_index}")
+        print("-" * 60)
+        print(chunk.text[:500])
+
+    return retrieved

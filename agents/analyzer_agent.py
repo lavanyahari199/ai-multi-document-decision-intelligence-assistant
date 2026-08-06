@@ -14,7 +14,28 @@ class AnalyzerAgent(BaseAgent):
         super().__init__(name="analyzer")
 
     def execute(self, state: AgentState) -> AgentState:
-        """Return state unchanged until analysis logic is implemented."""
+        """
+        Organize retrieved evidence into a structured format for downstream agents.
+        """
 
-        # TODO: Analyze retrieved evidence and produce decision-focused findings.
+        analysis = {
+            "query": state["user_query"],
+            "documents": [],
+        }
+
+        for chunk in state.get("retrieved_chunks", []):
+            analysis["documents"].append(
+                {
+                    "title": chunk.document_title,
+                    "category": chunk.document_category,
+                    "file_name": chunk.file_name,
+                    "chunk_index": chunk.chunk_index,
+                    "evidence": chunk.text,
+                }
+            )
+
+        state["analysis_result"] = analysis
+        state["current_agent"] = self.name
+        state["workflow_status"] = "analysis_completed"
+
         return state

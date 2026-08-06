@@ -11,15 +11,29 @@ from typing import Any, TypedDict
 
 
 class AgentState(TypedDict, total=False):
-    """Shared state object passed between LangGraph agent nodes."""
+    """Shared state passed between LangGraph agent nodes."""
 
     user_query: str
+
     intent: str
     execution_plan: list[str]
+    required_information: list[str]
+
     retrieved_chunks: list[Any]
-    analysis: dict[str, Any]
+
+    analysis_result: dict[str, Any]
+
     verification: dict[str, Any]
+
+    confidence: float
+
+    errors: list[str]
+
     memory: dict[str, Any]
+
+    current_agent: str
+    workflow_status: str
+
     final_response: str
 
 

@@ -22,7 +22,7 @@ from typing import Any
 
 import streamlit as st
 
-from src.chat_engine import answer_follow_up
+from orchestrator import run_agent_workflow
 from src.config import (
     APP_STYLES,
     APP_TITLE,
@@ -735,12 +735,19 @@ def render_follow_up_section(api_key: str) -> None:
         with st.chat_message("assistant"):
             with st.spinner("Retrieving relevant document context..."):
                 # Follow-up answers use the existing FAISS index and chunks instead of rebuilding retrieval assets.
-                answer = answer_follow_up(
-                    question,
-                    api_key,
-                    st.session_state.faiss_index,
-                    st.session_state.chunks,
+                initial_state = {
+                    "user_query": question,
+                }
+
+                final_state = run_agent_workflow(
+                    initial_state=initial_state,
+                    api_key=api_key,
+                    faiss_index=st.session_state.faiss_index,
+                    chunks=st.session_state.chunks,
                 )
+
+                answer = final_state["final_response"]
+                
             st.markdown(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
     except Exception as exc:

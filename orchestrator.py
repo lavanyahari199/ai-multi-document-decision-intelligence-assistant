@@ -16,14 +16,19 @@ from agents.retrieval_agent import RetrievalAgent
 from agents.verifier_agent import VerifierAgent
 
 
-def build_agent_workflow():
+def build_agent_workflow(api_key: str, faiss_index, chunks):
     """Build and compile the skeleton LangGraph workflow."""
 
     planner = PlannerAgent()
-    retriever = RetrievalAgent()
+    retriever = RetrievalAgent(
+        faiss_index=faiss_index, 
+        chunks=chunks,
+    )
     analyzer = AnalyzerAgent()
     verifier = VerifierAgent()
-    decision = DecisionAgent()
+    decision = DecisionAgent(
+        api_key=api_key,
+    )
 
     graph = StateGraph(AgentState)
     graph.add_node("planner", planner.execute)
@@ -42,8 +47,16 @@ def build_agent_workflow():
     return graph.compile()
 
 
-def run_agent_workflow(initial_state: AgentState) -> AgentState:
+def run_agent_workflow(
+        initial_state: AgentState,
+        api_key: str,
+        faiss_index,
+        chunks,
+        ) -> AgentState:
     """Run the skeleton workflow with the provided state."""
 
-    workflow = build_agent_workflow()
+    workflow = build_agent_workflow(
+        api_key=api_key, 
+        faiss_index=faiss_index, 
+        chunks=chunks)
     return workflow.invoke(initial_state)
