@@ -166,6 +166,8 @@ Text Chunking
 SentenceTransformer Embeddings
 ↓
 FAISS Vector Database
+↓
+LangGraph Agent Orchestrator (Foundation)
 
 Comparison Flow:
 
@@ -193,7 +195,7 @@ Answer Generation
 
 ## Project Status
 
-Current Status: Milestone 2 Complete
+Current Status: Milestone 3 - Step 1 Complete
 
 Completed:
 
@@ -207,10 +209,17 @@ Completed:
 * Decision Support Recommendations
 * Decision-Oriented RAG Follow-Up
 * Modular Architecture Refactor
+* LangGraph Agent Framework
+* Multi-Agent Architecture Foundation
+* Shared AgentState
+* Agent Orchestrator
+* Tool Layer Foundation
+* Memory Service Foundation
+* Prompt Template Foundation
 
 Next Milestone:
 
-* Agentic AI Enhancements
-* Decision Support Agent
-* Follow-Up Question Agent
-* Recommendation Agent
+* Multi-Agent Logic Implementation
+* Agent Integration with Existing RAG Pipeline
+* Conversation Memory
+* Verification Workflow
