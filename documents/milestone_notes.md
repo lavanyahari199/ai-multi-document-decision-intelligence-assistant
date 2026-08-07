@@ -336,16 +336,49 @@ Integrate a production-style LangGraph multi-agent workflow into the existing Re
 
 The application now uses a production-style multi-agent architecture for follow-up question answering. Instead of a direct retrieval-to-LLM pipeline, user queries are processed through specialized agents responsible for planning, retrieval, evidence analysis, verification, and final decision generation, while preserving the existing Executive Comparison Dashboard and document processing pipeline.
 
+# Milestone 3 – Step 3: Verification & AI Guardrails
+
+## Objective
+
+Strengthen the agentic workflow by validating evidence completeness and improving response reliability before final answer generation.
+
+## Features Implemented
+
+### Enhanced Verifier Agent
+
+* Evidence coverage validation
+* Missing information detection
+* Confidence scoring based on retrieved evidence
+
+### Decision Support
+
+* Verification metadata passed to the Decision Agent
+* AI guardrails for incomplete evidence
+* Improved response reliability
+
+## Deliverables Completed
+
+* Evidence coverage verification
+* Confidence-based validation
+* Missing information tracking
+* AI guardrails for response generation
+
+## Status
+
+**Milestone 3 Step 3 Completed Successfully**
+
+## Outcome
+
+The Verifier Agent now evaluates whether retrieved evidence sufficiently covers the user's requested decision factors before answer generation. This improves transparency, confidence estimation, and reduces unsupported conclusions in the final AI response.
+
 ## Next Milestone
 
-### Milestone 3 – Step 3: Advanced Agentic AI Enhancements
+### Milestone 4 – Documentation & Deployment
 
-Planned enhancements include:
+Planned activities include:
 
-* Persistent Conversation Memory
-* Advanced Verification Logic
-* Agent Observability
-* Workflow Visualization
-* Enhanced Source Attribution
-* Performance Optimizations
+* Architecture diagrams
+* GitHub documentation
+* Deployment
+
 

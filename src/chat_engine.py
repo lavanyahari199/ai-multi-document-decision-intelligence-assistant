@@ -25,6 +25,18 @@ def generate_final_answer(
 
     documents = analysis_result.get("documents", [])
 
+    verification = analysis_result.get("verification", {})
+
+    missing_information = verification.get(
+        "missing_information",
+        [],
+    )
+
+    confidence = verification.get(
+        "confidence",
+        1.0,
+    )
+
     if not documents:
         return "No relevant information was found in the uploaded documents."
 
@@ -63,6 +75,16 @@ def generate_final_answer(
 
     ## Conclusion
     <One concluding sentence>
+
+    Verification Summary
+
+    Confidence Score:
+    {confidence}
+
+    Missing Information:
+    {', '.join(missing_information) if missing_information else 'None'}
+
+    If important information is missing, mention this briefly before giving the recommendation. Do not speculate or invent missing details.    
 
     Question:
     {question}

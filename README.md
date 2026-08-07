@@ -214,6 +214,7 @@ FAISS Similarity Search
 Analyzer Agent
 ↓
 Verifier Agent
+(Evidence Coverage Validation)
 ↓
 Decision Agent
 ↓
@@ -223,7 +224,7 @@ Final Answer
 
 ## Project Status
 
-Current Status: Milestone 3 - Step 2 Complete
+Current Status: Milestone 3 - Step 3 Complete
 
 Completed:
 
@@ -250,10 +251,13 @@ Completed:
 * Verifier Agent Implementation
 * Decision Agent Implementation
 * Agentic Follow-Up Question Workflow
+* Evidence Coverage Verification
+* Confidence-Based Response Validation
+* AI Guardrails for Missing Evidence
 
 Next Milestone:
 
-* Persistent Conversation Memory
-* Enhanced Verification Logic
-* Agent Observability
+* Conversation Memory
 * Workflow Visualization
+* Deployment
+* Production Monitoring

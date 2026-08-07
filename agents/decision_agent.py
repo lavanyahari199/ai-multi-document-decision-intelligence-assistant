@@ -19,9 +19,14 @@ class DecisionAgent(BaseAgent):
         Generate the final response using the existing RAG chat engine.
         """
 
+        verification = state.get("verification", {})
+
+        analysis_result = dict(state["analysis_result"])
+        analysis_result["verification"] = verification
+
         answer = generate_final_answer(
             question=state["user_query"],
-            analysis_result=state["analysis_result"],
+            analysis_result=analysis_result,
             api_key=self.api_key,
         )
 
